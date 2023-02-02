@@ -15,5 +15,6 @@ namespace SocketServer.Models
         public StringBuilder sb = new StringBuilder();
         public string clientIp = "";
         public Socket? workSocket;
+        public double responseTime;
     }
 }

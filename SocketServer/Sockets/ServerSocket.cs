@@ -90,6 +90,7 @@ namespace SocketServer.Sockets
 
         private void ReadCallback(IAsyncResult ar)
         {
+            var start = DateTime.Now;
             String content = String.Empty;
 
             StateData state = (StateData)ar.AsyncState;
@@ -114,8 +115,10 @@ namespace SocketServer.Sockets
 
                         Task.Run(async () =>
                         {
+                            
                             var response = await socketClient.SendMessage(state.buffer);
-                            if(response != null)
+                            state.responseTime = DateTime.Now.Subtract(start).TotalSeconds;
+                            if (response != null)
                             {
                                 Send(state, response);
                             }
@@ -175,7 +178,7 @@ namespace SocketServer.Sockets
             try
             {
                 int bytesSent = handler.EndSend(ar);
-                logger.LogInformation("Response written to {0} at {1} =>>{2}", state.clientIp, DateTime.Now, res);
+                logger.LogInformation("Response written to {0} after {1} seconds. =>>{2}", state.clientIp,state.responseTime , res);
 
                 handler.Shutdown(SocketShutdown.Both);
                 handler.Close();
