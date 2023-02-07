@@ -30,8 +30,8 @@ namespace SocketServer.Sockets
         private readonly string? certPwd;
         private readonly bool isSsl;
 
-        public readonly Socket? client;
-        public readonly SslSocket? sslClient;
+        private Socket? client;
+        private SslSocket? sslClient;
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
         public SocketClient(ILogger<SocketClient> logger, IConfiguration configuration)
@@ -110,7 +110,9 @@ namespace SocketServer.Sockets
 
             if (!sslClient.client.Connected)
             {
-                throw new InvalidOperationException("Client socket is not connected");
+
+                var result = Connect();
+                sslClient = result.ssl;
             }
 
             // Data buffer
@@ -155,7 +157,8 @@ namespace SocketServer.Sockets
 
             if (!client.Connected)
             {
-                throw new InvalidOperationException("Client socket is not connected");
+                var result = Connect();
+                client = result.plain;
             }
 
             // Data buffer
