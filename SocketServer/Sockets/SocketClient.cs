@@ -168,6 +168,8 @@ namespace SocketServer.Sockets
             await _semaphore.WaitAsync();
             try
             {
+                var requestUtf8 = request.BytesToUtf8();
+                logger.LogInformation($"Sending message {requestUtf8.Substring(0,Math.Min(requestUtf8.Length,67))} to server.");
                 var sent = await client.SendAsync(request, SocketFlags.None);
 
                 var receiveTask = client.ReceiveAsync(messageReceived, SocketFlags.None);
