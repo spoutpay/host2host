@@ -148,7 +148,7 @@ namespace SocketServer.Sockets
             return messageReceived.Take(byteRecv).ToArray();
         }
 
-        private async Task<byte[]> SendMessagePlain(byte[] request)
+        private async Task<byte[]?> SendMessagePlain(byte[] request)
         {
             if(client == null)
             {
@@ -170,7 +170,17 @@ namespace SocketServer.Sockets
             {
                 var sent = await client.SendAsync(request, SocketFlags.None);
 
-                byteRecv = await client.ReceiveAsync(messageReceived, SocketFlags.None);
+                var receiveTask = client.ReceiveAsync(messageReceived, SocketFlags.None);
+                var timeOutTask = Task.Delay(55000);
+
+                if(receiveTask != await Task.WhenAny(receiveTask, timeOutTask))
+                {
+                    logger.LogError("Request timeout");
+                    _semaphore.Release();
+                    return null;
+                }
+                byteRecv = receiveTask.Result;
+
             }
             finally
             {
