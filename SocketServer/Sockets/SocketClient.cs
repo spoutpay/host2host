@@ -171,6 +171,8 @@ namespace SocketServer.Sockets
                 var requestUtf8 = request.BytesToUtf8();
                 logger.LogInformation($"Sending message {requestUtf8.Substring(0,Math.Min(requestUtf8.Length,67))} to server.");
                 var sent = await client.SendAsync(request, SocketFlags.None);
+                logger.LogInformation($"Sending {sent}, request length {request.Length}");
+                
 
                 var receiveTask = client.ReceiveAsync(messageReceived, SocketFlags.None);
                 var timeOutTask = Task.Delay(55000);
