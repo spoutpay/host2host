@@ -116,7 +116,7 @@ namespace SocketServer.Sockets
                         Task.Run(async () =>
                         {
                             
-                            var response = await socketClient.SendMessage(state.buffer);
+                            var response = await socketClient.SendMessage(content.HexToByteArray());
                             state.responseTime = DateTime.Now.Subtract(start).TotalSeconds;
                             if (response != null)
                             {
