@@ -150,9 +150,9 @@ namespace SocketServer.Sockets
 
         private async Task<byte[]?> SendMessagePlain(byte[] request)
         {
-            var traceId = new Guid().ToString();
+            var traceId = Guid.NewGuid().ToString();
 
-            if(client == null)
+            if (client == null)
             {
                 logger.LogInformation($"{traceId} -> client is null");
                 throw new NullReferenceException("Client socket is null");
