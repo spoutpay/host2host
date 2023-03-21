@@ -150,13 +150,17 @@ namespace SocketServer.Sockets
 
         private async Task<byte[]?> SendMessagePlain(byte[] request)
         {
+            var traceId = new Guid().ToString();
+
             if(client == null)
             {
+                logger.LogInformation($"{traceId} -> client is null");
                 throw new NullReferenceException("Client socket is null");
             }
 
             if (!client.Connected)
             {
+                logger.LogInformation($"{traceId} -> client is not connected");
                 var result = Connect();
                 client = result.plain;
             }
@@ -165,20 +169,24 @@ namespace SocketServer.Sockets
             byte[] messageReceived = new byte[8192];
             int byteRecv = 0;
 
+            logger.LogInformation($"{traceId} -> before thread lock");
             await _semaphore.WaitAsync();
             try
             {
                 var requestUtf8 = request.BytesToUtf8();
-                logger.LogInformation($"Sending message {requestUtf8.Substring(0,Math.Min(requestUtf8.Length,67))} to server.");
+                logger.LogInformation($"{traceId} -> Sending message {requestUtf8.Substring(0, Math.Min(requestUtf8.Length, 67))} to server.");
+                //logger.LogInformation($"Sending message {requestUtf8.Substring(0,Math.Min(requestUtf8.Length,67))} to server.");
                 var sent = await client.SendAsync(request, SocketFlags.None);
-                logger.LogInformation($"Sending {sent}, request length {request.Length}");
-                
+                //logger.LogInformation($"Sending {sent}, request length {request.Length}");
+                logger.LogInformation($"{traceId} -> Sending {sent}, request length {request.Length}");
+
 
                 var receiveTask = client.ReceiveAsync(messageReceived, SocketFlags.None);
                 var timeOutTask = Task.Delay(55000);
 
                 if(receiveTask != await Task.WhenAny(receiveTask, timeOutTask))
                 {
+                    logger.LogInformation($"{traceId} -> Request timeout");
                     logger.LogError("Request timeout");
                     _semaphore.Release();
                     return null;
@@ -189,16 +197,18 @@ namespace SocketServer.Sockets
             finally
             {
                 _semaphore.Release();
+                logger.LogInformation($"{traceId} -> thread lock release");
             }
 
-            Console.WriteLine("Message from Server -> {0}",
-                  Encoding.ASCII.GetString(messageReceived,
-                                             0, byteRecv));
+            logger.LogInformation($"{traceId} -> Message from Server -> {Encoding.ASCII.GetString(messageReceived, 0, byteRecv)}");
+
             if (byteRecv <= 0)
             {
+                logger.LogInformation($"{traceId} -> 0 bytes received from server");
                 return null;
             }
 
+            logger.LogInformation($"{traceId} -> received {byteRecv} from server, responding to client");
             return messageReceived.Take(byteRecv).ToArray();
         }
 
