@@ -29,6 +29,7 @@ namespace SocketServer.Sockets
         private readonly string? certPath;
         private readonly string? certPwd;
         private readonly bool isSsl;
+        private readonly int timeOut;
 
         private Socket? client;
         private SslSocket? sslClient;
@@ -44,6 +45,7 @@ namespace SocketServer.Sockets
             this.certPath = configuration["certPath"];
             this.certPwd = configuration["certPwd"];
             this.isSsl = Convert.ToBoolean(configuration["isSslClient"] ?? "false");
+            this.timeOut = Convert.ToInt32(configuration["timeout"] ?? "55000");
 
 
 
@@ -70,7 +72,7 @@ namespace SocketServer.Sockets
                 {
                     Socket tcpClient = new Socket(ipAddress.AddressFamily,
                 SocketType.Stream, ProtocolType.Tcp);
-                    tcpClient.SendTimeout = 55000;
+                    tcpClient.SendTimeout = this.timeOut;
                     tcpClient.Connect(localEndPoint);
 
                     X509Certificate2Collection collection = new X509Certificate2Collection();

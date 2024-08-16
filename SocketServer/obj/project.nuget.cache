@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0lVloCB5rDmXW1v31MxI5ptmmWelTaXDlydC6kCnks3+4IHJkhtXipcYwlCbO9VwMjoVufDFbD04wfa/YQBiAQ==",
+  "dgSpecHash": "OXPoO0K8eIo8KrcGAoYTcBDQQroTcM/4UFpDW+RBEI22gTdakxrWnZAoWrVL/WwnLqsLW19rQgwRBtOoo7Bdsw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\abola\\OneDrive\\Documents\\projects\\SocketServer\\SocketServer\\SocketServer.csproj",
+  "projectFilePath": "C:\\Users\\abola\\Documents\\spoutpay\\projects\\host2host\\SocketServer\\SocketServer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\abola\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "C:\\Users\\abola\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
@@ -25,7 +25,11 @@
     "C:\\Users\\abola\\.nuget\\packages\\serilog\\2.12.0\\serilog.2.12.0.nupkg.sha512",
     "C:\\Users\\abola\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\abola\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
-    "C:\\Users\\abola\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"
+    "C:\\Users\\abola\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
+    "C:\\Users\\abola\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.27\\microsoft.windowsdesktop.app.ref.6.0.27.nupkg.sha512",
+    "C:\\Users\\abola\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.27\\microsoft.netcore.app.ref.6.0.27.nupkg.sha512",
+    "C:\\Users\\abola\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.27\\microsoft.aspnetcore.app.ref.6.0.27.nupkg.sha512",
+    "C:\\Users\\abola\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.27\\microsoft.netcore.app.host.win-x64.6.0.27.nupkg.sha512"
   ],
   "logs": []
 }
